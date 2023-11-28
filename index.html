@@ -10,7 +10,7 @@
     <title>Turismo en Córdoba</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="stylesheet" href="fondoturista.css">
-    <link rel="table" href="table">
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -38,6 +38,7 @@
             <h2>Historia</h2>
             <p>Córdoba Capital es la segunda ciudad más grande de Argentina y cuenta con una rica historia que se remonta a la época colonial. Fundada en 1573 por el conquistador español Jerónimo Luis de Cabrera, la ciudad ha sido testigo de importantes
                 eventos históricos, como la Revolución de Mayo y la independencia de Argentina.</p>
+        <img src="historia_image.jpg" alt="Historia Image" width="300" height="200">
         </section>
 
         <section id="ciudades">
@@ -132,143 +133,93 @@
                         gocarpio@escuelasproa.edu.ar
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        Lourdes Salgan
+                    </td>
+                    <td>
+                        sadtobillas@escuelasproa.edu.ar
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Andres Merlo
+                    </td>
+                    <td>
+                        aamerlomansillo@escuelasproa.edu.ar
+                    </td>
+                </tr>
             </table>
 
         </section>
     </main>
 
 
-    <section id="crud">    
-        <h1>CRUD</h1>
-        <h2>Create</h2>
-        <input type="text" id="nameInput" placeholder="Name">
-        <input type="email" id="emailInput" placeholder="Email">
-        <button onclick="addUser()">Add User</button>
-    
-        <h2>Read</h2>
-        <table id="userTable">
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Actions</th>
-            </tr>
-        </table>
-    
-        <h2>Update</h2>
-        <input type="text" id="editNameInput" class="editInput" placeholder="Name">
-        <input type="email" id="editEmailInput" class="editInput" placeholder="Email">
-        <button onclick="updateUser()">Update User</button>
-    
-        <h2>Delete</h2>
-        <button onclick="deleteUser()">Delete User</button>
-    
-        <script>
-            var users = [];
-    
-            function addUser() {
-                var nameInput = document.getElementById('nameInput');
-                var emailInput = document.getElementById('emailInput');
-                var userTable = document.getElementById('userTable');
-    
-                var name = nameInput.value;
-                var email = emailInput.value;
-                if (name.trim() !== '' && email.trim() !== '') {
-                    var user = {
-                        name: name,
-                        email: email
-                    };
-                    users.push(user);
-                    localStorage.setItem('users', JSON.stringify(users));
-    
-                    var row = userTable.insertRow();
-                    var nameCell = row.insertCell();
-                    var emailCell = row.insertCell();
-                    var actionsCell = row.insertCell();
-    
-                    nameCell.textContent = name;
-                    emailCell.textContent = email;
-                    actionsCell.innerHTML = '<button onclick="editUser(this)">Edit</button>';
-    
-                    nameInput.value = '';
-                    emailInput.value = '';
-                }
-            }
-    
-            function loadUsers() {
-                var storedUsers = localStorage.getItem('users');
-                if (storedUsers) {
-                    users = JSON.parse(storedUsers);
-                    var userTable = document.getElementById('userTable');
-    
-                    for (var i = 0; i < users.length; i++) {
-                        var user = users[i];
-    
-                        var row = userTable.insertRow();
-                        var nameCell = row.insertCell();
-                        var emailCell = row.insertCell();
-                        var actionsCell = row.insertCell();
-    
-                        nameCell.textContent = user.name;
-                        emailCell.textContent = user.email;
-                        actionsCell.innerHTML = '<button onclick="editUser(this)">Edit</button>';
-                    }
-                }
-            }
-    
-            function editUser(button) {
-                var userTable = document.getElementById('userTable');
-                var editNameInput = document.getElementById('editNameInput');
-                var editEmailInput = document.getElementById('editEmailInput');
-                var currentRow = button.parentNode.parentNode;
-    
-                editNameInput.value = currentRow.cells[0].textContent;
-                editEmailInput.value = currentRow.cells[1].textContent;
-                editNameInput.style.display = 'block';
-                editEmailInput.style.display = 'block';
-                editNameInput.focus();
-            }
-    
-            function updateUser() {
-                var userTable = document.getElementById('userTable');
-                var editNameInput = document.getElementById('editNameInput');
-                var editEmailInput = document.getElementById('editEmailInput');
-                var currentRow = userTable.querySelector('.editInput');
-                if (editNameInput.value.trim() !== '' && editEmailInput.value.trim() !== '') {
-                    currentRow.cells[0].textContent = editNameInput.value;
-                    currentRow.cells[1].textContent = editEmailInput.value;
-                    currentRow.classList.remove('editInput');
-                    editNameInput.value = '';
-                    editEmailInput.value = '';
-                    editNameInput.style.display = 'none';
-                    editEmailInput.style.display = 'none';
-    
-     
-                    var index = Array.prototype.indexOf.call(userTable.rows, currentRow);
-                    if (index !== -1) {
-                        users[index].name = currentRow.cells[0].textContent;
-                        users[index].email = currentRow.cells[1].textContent;
-                        localStorage.setItem('users', JSON.stringify(users));
-                    }
-                }
-            }
-    
-            function deleteUser() {
-                var userTable = document.getElementById('userTable');
-                var currentRow = userTable.querySelector('.editInput');
-                if (currentRow) {
-                    var index = Array.prototype.indexOf.call(userTable.rows, currentRow);
-                    if (index !== -1) {
-                        userTable.deleteRow(index);
-                        users.splice(index, 1);
-                        localStorage.setItem('users', JSON.stringify(users));
-                    }
-                }
-            }
-    
-            window.onload = loadUsers;</section>
+<section id="crud">
+    <h1>CRUD</h1>
 
-    </script>
+    <!-- Create -->
+    <h2>Create</h2>
+    <form id="createForm">
+        <label for="EmailInput">Email:</label>
+        <input type="email" id="EmailInput" placeholder="Email" required>
+        <label for="mensajeInput">Mensaje:</label>
+        <input type="text" id="mensajeInput" placeholder="Mensaje" required>
+        <button type="button" onclick="addUser()">Add User</button>
+    </form>
 
+    <!-- Read -->
+    <h2>Read</h2>
+    <table id="userTable">
+        <tr>
+            <th>Email</th>
+            <th>Mensaje</th>
+            <th>Actions</th>                                                                            
+        </tr>
+    </table>
+
+    <!-- Update -->
+    <h2>Update</h2>
+    <form id="updateForm">
+        <label for="editEmailInput">Email:</label>
+        <input type="email" id="editEmailInput" class="editInput" placeholder="Email" required>
+        <label for="editMensajeInput">Mensaje:</label>
+        <input type="text" id="editMensajeInput" class="editInput" placeholder="Mensaje" required>
+        <button type="button" onclick="updateUser()">Update User</button>
+    </form>
+
+    <!-- Delete -->
+    <h2>Delete</h2>
+    <form id="deleteForm">
+        <label for="deleteEmailInput">Email:</label>
+        <input type="email" id="deleteEmailInput" placeholder="Email" required>
+        <button type="button" onclick="deleteUser()">Delete User</button>
+    </form>
+</section>
+    
+    <h2>Lugares Visitados</h2>
+  <form id="lugaresForm">
+    <input type="checkbox" id="carlospaz" name="lugar" value="Carlos Paz">
+    <label for="carlospaz">Villa Carlos Paz</label><br>
+    <input type="checkbox" id="altagracia" name="lugar" value="Alta Gracia">
+    <label for="altagracia">Alta Gracia</label><br>
+    <input type="checkbox" id="cosquin" name="lugar" value="Cosquín">
+    <label for="cosquin">Cosquín</label><br>
+    <input type="checkbox" id="villaallende" name="lugar" value="Villa Allende">
+    <label for="villaallende">Villa Allende</label><br>
+    <input type="checkbox" id="ciudad" name="lugar" value="Ciudad de Córdoba">
+    <label for="ciudad">Ciudad de Córdoba</label><br>
+  </form>
+
+  <h2>Género</h2>
+  <form id="generoForm">
+    <input type="radio" id="masculino" name="genero" value="Masculino">
+    <label for="masculino">Masculino</label><br>
+    <input type="radio" id="femenino" name="genero" value="Femenino">
+    <label for="femenino">Femenino</label><br>
+    <input type="radio" id="otro" name="genero" value="Otro">
+    <label for="otro">Otro</label><br>
+  </form>
     <footer>
         <p>Derechos reservados &copy; 2023 - Turismo Al Corte</p>
     </footer>
